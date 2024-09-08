@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -11,6 +12,20 @@ export interface Config {
   roomNumber:string;
   price:string;
   links:string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TimeService {
+
+  private apiUrl = 'http://localhost:8080/presentation-times'; // Change this to your backend URL
+
+  constructor(private http: HttpClient) { }
+
+  getPresentationTimes(): Observable<string> {
+    return this.http.get(this.apiUrl, { responseType: 'text' });
+  }
 }
 
 @Injectable()
