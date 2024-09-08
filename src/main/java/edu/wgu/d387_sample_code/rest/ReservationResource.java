@@ -10,6 +10,8 @@ import edu.wgu.d387_sample_code.model.response.ReservationResponse;
 //import edu.wgu.d387_sample_code.repository.PageableRoomRepository;
 import edu.wgu.d387_sample_code.repository.ReservationRepository;
 import edu.wgu.d387_sample_code.repository.RoomRepository;
+import edu.wgu.d387_sample_code.service.WelcomeMessageService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.convert.ConversionService;
@@ -22,6 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -153,4 +156,17 @@ public class ReservationResource {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
+    private final WelcomeMessageService welcomeMessageService;
+
+    public ReservationResource(WelcomeMessageService welcomeMessageService) {
+        this.welcomeMessageService = welcomeMessageService;
+    }
+
+    @GetMapping("/welcome")
+    public String welcomeMessage() {
+        welcomeMessageService.displayWelcomeMessage();
+        return "Welcome messages displayed in English and French!";
+    }
+
 }
+
